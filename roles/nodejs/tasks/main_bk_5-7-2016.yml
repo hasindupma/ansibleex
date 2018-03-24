@@ -1,0 +1,25 @@
+---
+#- name: Add nodejs 0.10.37 repo list 
+#  apt_repository: repo='ppa:chris-lea/node.js' state=present
+
+- name: Add nodejs 0.10.37 repo list
+  shell: wget -qO- https://deb.nodesource.com/setup_4.x | sudo bash -
+
+- name: Apt Package Update
+  apt:  update_cache=yes
+
+- name: Install Node js 
+  apt: name=nodejs state=latest 
+
+- name: Copy Deb package 
+  synchronize: src=/var/lib/jenkins/jobs/exchange-build/workspace/deb/exchange_{{ debFile }}_all.deb dest=/home/appuser/
+
+- name: Install Exchange package 
+  shell: dpkg -i /home/appuser/exchange_{{ debFile }}_all.deb
+
+- name: Configure Exchange Env
+  template: src=/home/jenkins/exchange-infra-config/prototype-configuration/dev/exchange dest=/etc/default/
+ 
+- name: Restart Exchange 
+  shell: service exchange restart
+

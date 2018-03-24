@@ -1,0 +1,7 @@
+---
+
+ - name: Transferring node.js 4.4.5
+   copy: src=node-v4.4.5-linux-x64.tar.gz dest=/tmp owner=root group=root mode=0775
+
+ - name: Install Nodejs
+   command: chdir=/usr/local tar --strip-components 1 -xzf /tmp/node-v4.4.5-linux-x64.tar.gz   
