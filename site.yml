@@ -1,5 +1,4 @@
-- hosts: webservers
-  remote_user: ubuntu
+- hosts: local
   sudo: yes
 
   roles:
